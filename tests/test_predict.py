@@ -42,7 +42,7 @@ def test_prediction_is_binary():
 
 def test_prediction_label_is_valid():
     result = predict_patient(VALID_INPUT)
-    assert result["label"] in ("no_disease", "disease")
+    assert result["label"] in ("no_disease", "disease_present")
 
 
 def test_confidence_is_between_zero_and_one():
