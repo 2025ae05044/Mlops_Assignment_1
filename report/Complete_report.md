@@ -10,7 +10,7 @@ dataset_source: "https://archive.ics.uci.edu/dataset/45/heart+disease"
 
 # Heart Disease Classification: MLOps Implementation Report
 
-**Student:** M. Vimal  
+**Student:** VIMALRAJ J 
 **BITS ID:** 2025AE05044  
 **Course:** Machine Learning Operations (MLOps)  
 **Repository:** [Mlops_Assignment_1](https://github.com/2025ae05044/Mlops_Assignment_1)  
