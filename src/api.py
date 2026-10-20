@@ -3,6 +3,7 @@ import logging
 import time
 
 from fastapi import FastAPI, HTTPException, Request
+from prometheus_client import Counter, Histogram, make_asgi_app
 from pydantic import BaseModel, ConfigDict
 
 from src.predict import predict_patient
@@ -16,6 +17,19 @@ logging.basicConfig(
 logger = logging.getLogger("heart_disease_api")
 
 
+# Prometheus metrics
+REQUEST_COUNT = Counter(
+    "heart_disease_http_requests_total",
+    "Total HTTP requests",
+    ["method", "endpoint", "status"],
+)
+
+REQUEST_DURATION = Histogram(
+    "heart_disease_http_request_duration_seconds",
+    "HTTP request duration in seconds",
+    ["method", "endpoint"],
+)
+
 # Create the FastAPI application
 app = FastAPI(
     title="Heart Disease Prediction API",
@@ -26,13 +40,19 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Prometheus metrics endpoint
+metrics_app = make_asgi_app()
+app.mount("/metrics", metrics_app)
+
 
 # Log request method, endpoint, status, and response duration.
 # Do not log patient input values.
+
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = time.perf_counter()
     status_code = 500
+    endpoint = request.url.path
 
     try:
         response = await call_next(request)
@@ -43,20 +63,32 @@ async def log_requests(request: Request, call_next):
         logger.exception(
             "Request failed: method=%s path=%s",
             request.method,
-            request.url.path,
+            endpoint,
         )
         raise
 
     finally:
-        duration_ms = (time.perf_counter() - start_time) * 1000
+        duration_seconds = time.perf_counter() - start_time
+
+        REQUEST_COUNT.labels(
+            method=request.method,
+            endpoint=endpoint,
+            status=str(status_code),
+        ).inc()
+
+        REQUEST_DURATION.labels(
+            method=request.method,
+            endpoint=endpoint,
+        ).observe(duration_seconds)
 
         logger.info(
             "method=%s path=%s status=%s duration_ms=%.2f",
             request.method,
-            request.url.path,
+            endpoint,
             status_code,
-            duration_ms,
+            duration_seconds * 1000,
         )
+
 
 
 # Validate the 13 required input features.
