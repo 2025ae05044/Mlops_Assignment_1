@@ -1,0 +1,10 @@
+student_name: "VIMALRAJ J"
+bits_id: "2025AE05044"
+course_name: "Machine Learning Operations (MLOps)"
+course_code: "AIMLCZG523"
+assignment_title: "MLOps Experimental Learning Assignment: End-to-End ML Model Development, CI/CD, and Production Deployment Experimental Learning"
+total_marks: 50
+objective: "Design, develop, and deploy a scalable, reproducible machine learning solution using modern MLOps best practices, including practical automation, experiment tracking, CI/CD, containerization, deployment, and monitoring."
+dataset_source: "https://archive.ics.uci.edu/dataset/45/heart+disease"
+repo_url: "repo_url:https://github.com/2025ae05044/Mlops_Assignment_1"
+video_link: "https://drive.google.com/file/d/1eASUaCJ4cFvPwQwxVPbYWAGEf_lbFBkp/view?usp=drive_link"
