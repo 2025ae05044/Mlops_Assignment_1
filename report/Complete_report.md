@@ -1,7 +1,7 @@
 ---
 title: "Heart Disease Classification: MLOps Implementation Report"
 description: "Implementation evidence for the MLOps assignment covering data preparation, model evaluation, tracking, API delivery, containers, deployment configuration, and observability."
-author: "M. Vimal"
+author: "VIMALRAJ J"
 course: "Machine Learning Operations (MLOps)"
 student_id: "2025AE05044"
 repository: "https://github.com/2025ae05044/Mlops_Assignment_1"
